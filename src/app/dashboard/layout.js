@@ -37,29 +37,29 @@ export default function DashboardLayout({ children }) {
 
   return (
     <BunkerProvider>
-      <div className="flex h-screen bg-[#050505] overflow-hidden text-white font-sans selection:bg-lime-400 selection:text-black">
-        {/* Sidebar - Glassmorphic */}
-        <aside className="w-80 bg-zinc-900/50 backdrop-blur-3xl border-r border-white/5 flex flex-col shadow-2xl relative z-20">
-          <div className="p-10">
-            <Link href="/dashboard" className="flex items-center gap-4 group">
-              <div className="h-12 w-12 rounded-2xl bg-white flex items-center justify-center shadow-[0_0_20px_rgba(255,255,255,0.2)] group-hover:bg-lime-400 group-hover:shadow-lime-400/30 transition-all duration-500 transform group-hover:rotate-12">
-                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-black"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" /></svg>
+      <div className="flex h-screen bg-[#0a0c10] overflow-hidden text-slate-200 font-sans selection:bg-emerald-500/30 selection:text-emerald-200">
+        {/* Sidebar - Sophisticated Dark */}
+        <aside className="w-72 bg-[#0d1117] border-r border-slate-800/60 flex flex-col relative z-20">
+          <div className="p-8">
+            <Link href="/dashboard" className="flex items-center gap-3 group">
+              <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-emerald-400 to-indigo-600 flex items-center justify-center shadow-lg shadow-emerald-900/20 group-hover:scale-105 transition-transform duration-500">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" /></svg>
               </div>
               <div className="flex flex-col">
-                <span className="font-black text-2xl tracking-tighter text-white leading-none">NEXUS</span>
-                <span className="font-bold text-[10px] tracking-[0.4em] text-lime-400 uppercase mt-1">Registry</span>
+                <span className="font-bold text-xl tracking-tight text-white leading-none">NexusCore</span>
+                <span className="font-medium text-[9px] tracking-[0.2em] text-slate-500 uppercase mt-1">Command v2.4</span>
               </div>
             </Link>
           </div>
 
-          <nav className="flex-1 overflow-y-auto px-6 py-4 space-y-12">
+          <nav className="flex-1 overflow-y-auto px-4 py-4 space-y-10">
             <div>
-              <h3 className="px-4 text-[9px] font-black text-zinc-500 uppercase tracking-[0.3em] mb-6">Main Interface</h3>
-              <ul className="space-y-2">
+              <h3 className="px-4 text-[9px] font-bold text-slate-600 uppercase tracking-[0.2em] mb-4">Operations</h3>
+              <ul className="space-y-1">
                 {navigation.map((item) => (
                   <li key={item.name}>
-                    <Link href={item.href} className={`flex items-center gap-4 px-5 py-4 rounded-[1.25rem] text-sm font-bold transition-all duration-300 group ${pathname === item.href ? "bg-white text-black shadow-xl" : "text-zinc-500 hover:bg-white/5 hover:text-white"}`}>
-                      <span className={`${pathname === item.href ? "text-black" : "text-zinc-500 group-hover:text-lime-400"} transition-colors`}>{item.icon}</span>
+                    <Link href={item.href} className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 group ${pathname === item.href ? "bg-slate-800/50 text-emerald-400 border border-slate-700/50" : "text-slate-500 hover:text-slate-200 hover:bg-slate-800/30"}`}>
+                      <span className={`${pathname === item.href ? "text-emerald-400" : "text-slate-600 group-hover:text-emerald-500"} transition-colors`}>{item.icon}</span>
                       {item.name}
                     </Link>
                   </li>
@@ -68,12 +68,12 @@ export default function DashboardLayout({ children }) {
             </div>
 
             <div>
-              <h3 className="px-4 text-[9px] font-black text-zinc-500 uppercase tracking-[0.3em] mb-6">Domain Sectors</h3>
-              <ul className="space-y-2">
+              <h3 className="px-4 text-[9px] font-bold text-slate-600 uppercase tracking-[0.2em] mb-4">Sectors</h3>
+              <ul className="space-y-1">
                 {sectorManagement.map((item) => (
                   <li key={item.name}>
-                    <Link href={item.href} className={`flex items-center gap-4 px-5 py-4 rounded-[1.25rem] text-[13px] font-bold transition-all duration-300 group ${pathname === item.href ? "bg-zinc-800 text-white border border-white/10" : "text-zinc-500 hover:bg-white/5 hover:text-white"}`}>
-                      <span className={`${pathname === item.href ? item.color : "text-zinc-600 group-hover:text-white"} transition-colors`}>{item.icon}</span>
+                    <Link href={item.href} className={`flex items-center gap-3 px-4 py-3 rounded-xl text-[13px] font-semibold transition-all duration-200 group ${pathname === item.href ? "bg-slate-800/50 text-white border border-slate-700/50" : "text-slate-500 hover:text-slate-300 hover:bg-slate-800/30"}`}>
+                      <span className={`${pathname === item.href ? "opacity-100" : "opacity-40 group-hover:opacity-100"} transition-opacity`}>{item.icon}</span>
                       {item.name}
                     </Link>
                   </li>
@@ -82,17 +82,17 @@ export default function DashboardLayout({ children }) {
             </div>
           </nav>
 
-          <div className="p-6 mt-auto">
-            <div className="p-5 bg-black/40 border border-white/5 rounded-3xl flex items-center justify-between group hover:border-white/20 transition-all">
-              <div className="flex items-center gap-4">
-                <div className="h-11 w-11 rounded-full bg-zinc-800 border border-white/10 text-white flex items-center justify-center font-black text-xs shadow-inner">NP</div>
+          <div className="p-4 mt-auto">
+            <div className="p-4 bg-slate-900/40 border border-slate-800/50 rounded-2xl flex items-center justify-between group">
+              <div className="flex items-center gap-3">
+                <div className="h-9 w-9 rounded-lg bg-slate-800 border border-slate-700 text-slate-300 flex items-center justify-center font-bold text-[10px]">NP</div>
                 <div className="min-w-0">
-                  <p className="text-[13px] font-black text-white truncate">Nexus Prime</p>
-                  <p className="text-[9px] font-bold text-lime-400 uppercase tracking-widest truncate">Root Admin</p>
+                  <p className="text-xs font-bold text-slate-200 truncate">Nexus Prime</p>
+                  <p className="text-[8px] font-medium text-slate-500 uppercase tracking-widest truncate">Administrator</p>
                 </div>
               </div>
-              <Link href="/login" className="text-zinc-600 hover:text-white transition-colors p-2">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" /><polyline points="16 17 21 12 16 7" /><line x1="21" y1="12" x2="9" y2="12" /></svg>
+              <Link href="/login" className="text-slate-600 hover:text-red-400 transition-colors p-1.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" /><polyline points="16 17 21 12 16 7" /><line x1="21" y1="12" x2="9" y2="12" /></svg>
               </Link>
             </div>
           </div>
@@ -100,29 +100,28 @@ export default function DashboardLayout({ children }) {
 
         {/* Main Content Area */}
         <div className="flex-1 flex flex-col min-w-0 overflow-hidden relative">
-          {/* Cyber Header */}
-          <header className="h-24 bg-black/40 backdrop-blur-md border-b border-white/5 flex items-center justify-between px-16 shadow-2xl shrink-0 z-10">
-            <div className="flex items-center gap-8">
-              <h2 className="text-3xl font-black text-white tracking-tighter uppercase">
-                {navigation.find((n) => n.href === pathname)?.name || sectorManagement.find((n) => n.href === pathname)?.name || "Governance"}
+          <header className="h-16 bg-[#0a0c10]/80 backdrop-blur-md border-b border-slate-800/50 flex items-center justify-between px-10 shrink-0 z-10">
+            <div className="flex items-center gap-6">
+              <h2 className="text-lg font-bold text-white tracking-tight">
+                {navigation.find((n) => n.href === pathname)?.name || sectorManagement.find((n) => n.href === pathname)?.name || "Dashboard"}
               </h2>
+              <div className="h-4 w-[1px] bg-slate-800" />
               <DbStatusWidget />
             </div>
-            <div className="flex items-center gap-10 text-[10px] font-bold text-zinc-500 uppercase tracking-[0.2em]">
-              <div className="flex flex-col items-end">
-                <span className="text-zinc-600 mb-1">Station ID</span>
-                <span className="text-white font-black tracking-[0.3em]">DOMAIN-04</span>
+            <div className="flex items-center gap-8 text-[9px] font-bold text-slate-500 uppercase tracking-widest">
+              <div className="flex items-center gap-2">
+                <span className="text-slate-600">SID:</span>
+                <span className="text-slate-300">DOM-04</span>
               </div>
-              <div className="h-10 w-[1px] bg-white/5" />
-              <div className="flex flex-col items-end">
-                <span className="text-zinc-600 mb-1">Local Time</span>
-                <span className="font-mono text-lime-400 text-lg">24.05.2026</span>
+              <div className="flex items-center gap-2">
+                <span className="text-slate-600">UTC:</span>
+                <span className="font-mono text-emerald-500 text-xs">24.05.26</span>
               </div>
             </div>
           </header>
 
-          <main className="flex-1 overflow-y-auto p-16 bg-[#050505]">
-            <div className="max-w-[1400px] mx-auto space-y-16">
+          <main className="flex-1 overflow-y-auto p-10 bg-[#0a0c10]">
+            <div className="max-w-6xl mx-auto space-y-10">
               {children}
             </div>
           </main>

@@ -69,7 +69,7 @@ export default function DashboardOverview() {
       {/* Main Stats Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {stats.map((stat) => (
-          <div key={stat.name} className="command-card group">
+          <div key={stat.name} className="bg-zinc-950/50 backdrop-blur-md border border-zinc-900 p-6 relative transition-all duration-300 hover:border-amber-600/40 hover:shadow-[0_0_30px_rgba(245,158,11,0.05)] hover:-translate-y-1 group">
             <div className="flex justify-between items-start mb-4">
               <p className="text-[9px] font-black text-zinc-600 uppercase tracking-widest">{stat.name}</p>
               <div className={`status-dot ${
@@ -114,7 +114,7 @@ export default function DashboardOverview() {
         </div>
 
         {/* Sector Integrity */}
-        <div className="lg:col-span-2 command-card">
+        <div className="lg:col-span-2 bg-zinc-950/50 backdrop-blur-md border border-zinc-900 p-6 relative transition-all duration-300 hover:border-amber-600/40 hover:shadow-[0_0_30px_rgba(245,158,11,0.05)] hover:-translate-y-1 group">
           <div className="flex items-center justify-between mb-8">
             <h3 className="text-xs font-black text-white tracking-widest">Sector_Integrity_Diagnostic</h3>
             <div className="flex gap-4">

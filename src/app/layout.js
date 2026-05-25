@@ -22,7 +22,9 @@ export default function RootLayout({ children }) {
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full bg-[var(--background)] text-[var(--foreground)] flex flex-col text-base antialiased">
+      <body className="min-h-full bg-[var(--background)] text-[var(--foreground)] flex flex-col text-base antialiased crt-flicker">
+        <div className="vignette" />
+        <div className="scanlines" />
         {children}
       </body>
     </html>

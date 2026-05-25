@@ -5,7 +5,7 @@ import React, { createContext, useContext, useState, useEffect, useCallback } fr
 const BunkerContext = createContext();
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_NEXUS_API_URL || "http://localhost:3000";
-const API_KEY = process.env.NEXT_PUBLIC_NEXUS_ADMIN_API_KEY;
+const API_KEY = process.env.NEXT_PUBLIC_NEXUS_ADMIN_API_KEY || "NEXUS_DEMO_KEY_2026";
 
 export function BunkerProvider({ children }) {
   const [policies, setPolicies] = useState([]);

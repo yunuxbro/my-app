@@ -68,7 +68,7 @@ export default function PoliciesPage() {
       {/* Enhanced Draft Form */}
       <section className="glass-card p-12 neon-border">
         <h3 className="text-2xl font-black text-white mb-10 flex items-center gap-4">
-          <span className="h-10 w-2 bg-lime-400 rounded-full shadow-[0_0_15px_#39ff14]" />
+          <span className="h-10 w-2 bg-amber-600 rounded-full shadow-[0_0_15px_#39ff14]" />
           Draft New Directive
         </h3>
         <form onSubmit={handleSubmit} className="space-y-10">
@@ -125,8 +125,8 @@ export default function PoliciesPage() {
         <div className="p-10 border-b border-white/5 bg-white/[0.02] flex justify-between items-center">
           <h3 className="text-xl font-black text-white tracking-tight uppercase">Global Enforcement Registry</h3>
           <div className="flex items-center gap-3">
-            <span className="h-2 w-2 rounded-full bg-lime-400 animate-pulse" />
-            <span className="text-[10px] font-black text-lime-400 uppercase tracking-[0.2em]">{policies.length} Active Directives</span>
+            <span className="h-2 w-2 rounded-full bg-amber-600 animate-pulse" />
+            <span className="text-[10px] font-black text-amber-600 uppercase tracking-[0.2em]">{policies.length} Active Directives</span>
           </div>
         </div>
         <div className="overflow-x-auto">
@@ -155,7 +155,7 @@ export default function PoliciesPage() {
                   <td className="py-10 px-12 font-mono text-xs font-black text-zinc-600 truncate max-w-[120px] group-hover:text-zinc-400 transition-colors">{p._id}</td>
                   <td className="py-10 px-8">
                     <p className="font-black text-white text-lg tracking-tight">{p.title}</p>
-                    <span className="px-3 py-1 bg-lime-400/10 text-lime-400 rounded-md text-[9px] font-black uppercase tracking-[0.2em] border border-lime-400/20 mt-2 inline-block">{p.domain}</span>
+                    <span className="px-3 py-1 bg-amber-600/10 text-amber-600 rounded-md text-[9px] font-black uppercase tracking-[0.2em] border border-amber-600/20 mt-2 inline-block">{p.domain}</span>
                   </td>
                   <td className="py-10 px-8 text-zinc-500 font-bold text-xs font-mono">
                     {new Date(p.created_at).toLocaleString()}

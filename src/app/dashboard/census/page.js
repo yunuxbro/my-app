@@ -71,7 +71,7 @@ export default function CensusPage() {
       {/* Register Form */}
       <section className="glass-card p-12 neon-border">
         <h3 className="text-2xl font-black text-white mb-10 flex items-center gap-4">
-          <span className="h-10 w-2 bg-lime-400 rounded-full shadow-[0_0_15px_#39ff14]" />
+          <span className="h-10 w-2 bg-amber-600 rounded-full shadow-[0_0_15px_#39ff14]" />
           Initialize New Node
         </h3>
         <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
@@ -134,8 +134,8 @@ export default function CensusPage() {
         <div className="p-10 border-b border-white/5 bg-white/[0.02] flex justify-between items-center">
           <h3 className="text-xl font-black text-white tracking-tight uppercase">Population Registry</h3>
           <div className="flex items-center gap-3">
-            <span className="h-2 w-2 rounded-full bg-lime-400 animate-pulse" />
-            <span className="text-[10px] font-black text-lime-400 uppercase tracking-[0.2em]">{survivors.length} Verified Nodes</span>
+            <span className="h-2 w-2 rounded-full bg-amber-600 animate-pulse" />
+            <span className="text-[10px] font-black text-amber-600 uppercase tracking-[0.2em]">{survivors.length} Verified Nodes</span>
           </div>
         </div>
         <div className="overflow-x-auto">
@@ -161,7 +161,7 @@ export default function CensusPage() {
                 </tr>
               ) : survivors.map((s) => (
                 <tr key={s._id} className="hover:bg-white/[0.03] transition-colors group">
-                  <td className="py-10 px-12 font-mono text-sm font-black text-lime-400 uppercase tracking-tighter">
+                  <td className="py-10 px-12 font-mono text-sm font-black text-amber-600 uppercase tracking-tighter">
                     {s.identity_code}
                   </td>
                   <td className="py-10 px-8">
@@ -172,7 +172,7 @@ export default function CensusPage() {
                     {s.duty}
                   </td>
                   <td className="py-10 px-8">
-                    <span className="px-4 py-1.5 bg-zinc-800 text-white rounded-lg text-[10px] font-black uppercase tracking-widest border border-white/10 group-hover:border-lime-400/30 transition-all">
+                    <span className="px-4 py-1.5 bg-zinc-800 text-white rounded-lg text-[10px] font-black uppercase tracking-widest border border-white/10 group-hover:border-amber-600/30 transition-all">
                       {s.clearance}
                     </span>
                   </td>

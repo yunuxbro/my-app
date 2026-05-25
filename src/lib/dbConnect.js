@@ -27,7 +27,14 @@ async function dbConnect() {
       bufferCommands: false,
     };
 
-    cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
+    cached.promise = mongoose.connect(MONGODB_URI, opts).then(async (mongoose) => {
+      // Seed if necessary (Import seedDatabase inside then to avoid circular dependency or early import issues)
+      try {
+        const { seedDatabase } = await import('./seed');
+        await seedDatabase();
+      } catch (err) {
+        console.error("Auto-seeding failed:", err);
+      }
       return mongoose;
     });
   }

@@ -18,89 +18,104 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-[var(--background)] p-6 font-sans">
-      <div className="w-full max-w-xl space-y-10 decent-card p-16 shadow-2xl">
-        <div className="text-center">
-          <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-[1.5rem] bg-[var(--accent-primary)] text-slate-900 shadow-xl shadow-emerald-500/20 active:scale-95 transition-transform">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="40"
-              height="40"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" />
-              <path d="m9 12 2 2 4-4" />
-            </svg>
-          </div>
-          <h1 className="mt-8 text-5xl font-extrabold tracking-tighter text-[var(--foreground)]">
-            NexusCore
-          </h1>
-          <p className="mt-3 text-lg font-bold text-slate-400 uppercase tracking-widest">
-            Governance Terminal Access
-          </p>
-        </div>
+    <div className="flex min-h-screen flex-col items-center justify-center bg-[#05070a] p-4 font-mono relative overflow-hidden">
+      <div className="scanline" />
+      
+      {/* Tactical HUD Elements */}
+      <div className="absolute top-4 left-4 text-[10px] text-emerald-500/30 font-bold uppercase tracking-widest hidden md:block">
+        Terminal: NEXUS-PRIME-01 // Sector: DOM-04
+      </div>
+      <div className="absolute top-4 right-4 text-[10px] text-emerald-500/30 font-bold uppercase tracking-widest hidden md:block">
+        Security Level: OMEGA // Status: ENFORCED
+      </div>
 
-        <form className="mt-12 space-y-8" onSubmit={handleLogin}>
-          <div className="space-y-6">
-            <div>
-              <label
-                htmlFor="admin-id"
-                className="block text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 mb-2 px-1"
+      <div className="w-full max-w-lg tactical-card">
+        <div className="mb-12 border-b border-emerald-500/10 pb-8 relative">
+          <div className="flex items-center gap-4 mb-6">
+            <div className="h-12 w-12 border-2 border-emerald-500 flex items-center justify-center text-emerald-500 shadow-[0_0_15px_rgba(16,185,129,0.2)]">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="28"
+                height="28"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="square"
+                strokeLinejoin="round"
               >
-                Administrator ID
-              </label>
-              <input
-                id="admin-id"
-                type="text"
-                disabled
-                value="NEXUS-PRIME-01"
-                className="mt-2 block w-full rounded-2xl border border-slate-800 bg-slate-900/50 px-6 py-4 text-lg font-bold text-slate-500 cursor-not-allowed"
-              />
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" />
+                <path d="m9 12 2 2 4-4" />
+              </svg>
             </div>
             <div>
-              <label
-                htmlFor="password"
-                className="block text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 mb-2 px-1"
-              >
+              <h1 className="text-3xl font-black tracking-tighter text-white uppercase italic">
+                NexusCore
+              </h1>
+              <div className="flex items-center gap-2">
+                <span className="h-1.5 w-1.5 bg-emerald-500 animate-pulse" />
+                <p className="text-[10px] font-bold text-emerald-500/60 uppercase tracking-[0.2em]">
+                  Governance Terminal
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <form className="space-y-8" onSubmit={handleLogin}>
+          <div className="space-y-6">
+            <div>
+              <label className="block text-[10px] font-black uppercase tracking-[0.3em] text-zinc-500 mb-3 ml-1">
+                Auth ID
+              </label>
+              <div className="relative">
+                <input
+                  type="text"
+                  disabled
+                  value="NEXUS-PRIME-01"
+                  className="tactical-input opacity-40 border-dashed"
+                />
+              </div>
+            </div>
+            <div>
+              <label className="block text-[10px] font-black uppercase tracking-[0.3em] text-zinc-500 mb-3 ml-1">
                 Security Key
               </label>
               <input
-                id="password"
                 type="password"
                 required
                 autoFocus
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
-                className="mt-2 block w-full rounded-2xl border border-slate-700 bg-slate-900/40 px-6 py-4 text-xl font-bold text-[var(--foreground)] shadow-sm focus:border-[var(--accent-primary)] focus:ring-4 focus:ring-emerald-500/10 outline-none transition-all placeholder:text-slate-700"
+                placeholder="[********]"
+                className="tactical-input"
               />
             </div>
           </div>
 
           {error && (
-            <div className="rounded-2xl bg-red-900/20 p-4 text-center text-sm font-bold text-red-400 border border-red-900/50 animate-shake">
-              {error}
+            <div className="p-4 bg-red-950/20 border border-red-500/40 text-[11px] font-bold text-red-500 uppercase tracking-widest text-center animate-pulse">
+              !! {error} !!
             </div>
           )}
 
-          <button
-            type="submit"
-            className="flex w-full justify-center rounded-2xl bg-[var(--accent-primary)] px-6 py-5 text-xl font-black text-slate-900 shadow-xl shadow-emerald-500/10 hover:brightness-110 active:scale-[0.98] transition-all"
-          >
-            Authenticate Access
+          <button type="submit" className="btn-command w-full group">
+            Authenticate
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square" strokeLinejoin="round" className="group-hover:translate-x-1 transition-transform"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </button>
         </form>
 
-        <div className="mt-12 pt-8 border-t border-slate-800">
-          <p className="text-center text-[10px] font-black text-slate-500 uppercase tracking-[0.3em]">
-            Property of Domain 04 Governance
-          </p>
+        <div className="mt-12 pt-6 border-t border-white/5 flex justify-between items-center text-[9px] font-bold text-zinc-600 uppercase tracking-widest">
+          <span>Property of DOM-04</span>
+          <span className="text-emerald-500/20">V2.4.0-STABLE</span>
         </div>
+      </div>
+
+      {/* Footer HUD */}
+      <div className="mt-8 text-[9px] text-zinc-700 font-bold uppercase tracking-[0.4em] flex gap-8">
+        <span>[ENC: AES-256]</span>
+        <span>[LINK: SECURE]</span>
+        <span>[SYS: OPTIMAL]</span>
       </div>
     </div>
   );

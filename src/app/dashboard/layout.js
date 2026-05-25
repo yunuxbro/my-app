@@ -37,16 +37,16 @@ export default function DashboardLayout({ children }) {
 
   return (
     <BunkerProvider>
-      <div className="flex h-screen bg-[#0a0c10] overflow-hidden text-slate-200 font-sans selection:bg-emerald-500/30 selection:text-emerald-200">
+      <div className="flex h-screen bg-[var(--background)] overflow-hidden text-[var(--foreground)] font-sans selection:bg-emerald-500/30 selection:text-emerald-200">
         {/* Sidebar - Sophisticated Dark */}
-        <aside className="w-72 bg-[#0d1117] border-r border-slate-800/60 flex flex-col relative z-20">
+        <aside className="w-72 bg-[var(--surface-card)] border-r border-[var(--surface-border)] flex flex-col relative z-20">
           <div className="p-8">
             <Link href="/dashboard" className="flex items-center gap-3 group">
-              <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-emerald-400 to-indigo-600 flex items-center justify-center shadow-lg shadow-emerald-900/20 group-hover:scale-105 transition-transform duration-500">
+              <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-[var(--accent-primary)] to-[var(--accent-secondary)] flex items-center justify-center shadow-lg shadow-emerald-900/20 group-hover:scale-105 transition-transform duration-500">
                 <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" /></svg>
               </div>
               <div className="flex flex-col">
-                <span className="font-bold text-xl tracking-tight text-white leading-none">NexusCore</span>
+                <span className="font-bold text-xl tracking-tight text-[var(--foreground)] leading-none">NexusCore</span>
                 <span className="font-medium text-[9px] tracking-[0.2em] text-slate-500 uppercase mt-1">Command v2.4</span>
               </div>
             </Link>
@@ -58,8 +58,8 @@ export default function DashboardLayout({ children }) {
               <ul className="space-y-1">
                 {navigation.map((item) => (
                   <li key={item.name}>
-                    <Link href={item.href} className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 group ${pathname === item.href ? "bg-slate-800/50 text-emerald-400 border border-slate-700/50" : "text-slate-500 hover:text-slate-200 hover:bg-slate-800/30"}`}>
-                      <span className={`${pathname === item.href ? "text-emerald-400" : "text-slate-600 group-hover:text-emerald-500"} transition-colors`}>{item.icon}</span>
+                    <Link href={item.href} className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 group ${pathname === item.href ? "bg-slate-800/40 text-[var(--accent-primary)] border border-slate-700/30" : "text-slate-500 hover:text-slate-200 hover:bg-slate-800/20"}`}>
+                      <span className={`${pathname === item.href ? "text-[var(--accent-primary)]" : "text-slate-600 group-hover:text-[var(--accent-primary)]"} transition-colors`}>{item.icon}</span>
                       {item.name}
                     </Link>
                   </li>
@@ -72,7 +72,7 @@ export default function DashboardLayout({ children }) {
               <ul className="space-y-1">
                 {sectorManagement.map((item) => (
                   <li key={item.name}>
-                    <Link href={item.href} className={`flex items-center gap-3 px-4 py-3 rounded-xl text-[13px] font-semibold transition-all duration-200 group ${pathname === item.href ? "bg-slate-800/50 text-white border border-slate-700/50" : "text-slate-500 hover:text-slate-300 hover:bg-slate-800/30"}`}>
+                    <Link href={item.href} className={`flex items-center gap-3 px-4 py-3 rounded-xl text-[13px] font-semibold transition-all duration-200 group ${pathname === item.href ? "bg-slate-800/40 text-[var(--foreground)] border border-slate-700/30" : "text-slate-500 hover:text-slate-300 hover:bg-slate-800/20"}`}>
                       <span className={`${pathname === item.href ? "opacity-100" : "opacity-40 group-hover:opacity-100"} transition-opacity`}>{item.icon}</span>
                       {item.name}
                     </Link>
@@ -83,7 +83,7 @@ export default function DashboardLayout({ children }) {
           </nav>
 
           <div className="p-4 mt-auto">
-            <div className="p-4 bg-slate-900/40 border border-slate-800/50 rounded-2xl flex items-center justify-between group">
+            <div className="p-4 bg-slate-900/40 border border-[var(--surface-border)] rounded-2xl flex items-center justify-between group">
               <div className="flex items-center gap-3">
                 <div className="h-9 w-9 rounded-lg bg-slate-800 border border-slate-700 text-slate-300 flex items-center justify-center font-bold text-[10px]">NP</div>
                 <div className="min-w-0">
@@ -100,7 +100,7 @@ export default function DashboardLayout({ children }) {
 
         {/* Main Content Area */}
         <div className="flex-1 flex flex-col min-w-0 overflow-hidden relative">
-          <header className="h-16 bg-[#0a0c10]/80 backdrop-blur-md border-b border-slate-800/50 flex items-center justify-between px-10 shrink-0 z-10">
+          <header className="h-16 bg-[var(--background)]/80 backdrop-blur-md border-b border-[var(--surface-border)] flex items-center justify-between px-10 shrink-0 z-10">
             <div className="flex items-center gap-6">
               <h2 className="text-lg font-bold text-white tracking-tight">
                 {navigation.find((n) => n.href === pathname)?.name || sectorManagement.find((n) => n.href === pathname)?.name || "Dashboard"}
@@ -115,12 +115,12 @@ export default function DashboardLayout({ children }) {
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-slate-600">UTC:</span>
-                <span className="font-mono text-emerald-500 text-xs">24.05.26</span>
+                <span className="font-mono text-[var(--accent-primary)] text-xs">24.05.26</span>
               </div>
             </div>
           </header>
 
-          <main className="flex-1 overflow-y-auto p-10 bg-[#0a0c10]">
+          <main className="flex-1 overflow-y-auto p-10 bg-[var(--background)]">
             <div className="max-w-6xl mx-auto space-y-10">
               {children}
             </div>

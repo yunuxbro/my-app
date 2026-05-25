@@ -31,8 +31,10 @@ export default function DashboardOverview() {
         <button onClick={refreshData} className="mt-2 bg-amber-600 text-black px-4 py-1 text-[10px] font-black uppercase">Force Refresh</button>
       </div>
 ...
-  const enforcedCount = policies.filter(p => p.status === "Enforced").length;
-  const enforcementRate = policies.length > 0 ? (enforcedCount / policies.length) * 100 : 0;
+  const policiesList = policies || [];
+
+  const enforcedCount = policiesList.filter(p => p?.status === "Enforced").length;
+  const enforcementRate = policiesList.length > 0 ? (enforcedCount / policiesList.length) * 100 : 0;
   
   const alerts = [
     {

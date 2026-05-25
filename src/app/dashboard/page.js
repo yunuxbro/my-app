@@ -1,21 +1,36 @@
 "use client";
 
 import { useBunker } from "@/context/BunkerContext";
+import { useEffect, useState } from "react";
+import { getSystemDiagnostics } from "@/app/actions-debug";
 
 export default function DashboardOverview() {
-  const { policies, survivors, dbConnected, connectionError, loading } = useBunker();
+  const { policies, survivors, dbConnected, loading, refreshData } = useBunker();
+  const [debug, setDebug] = useState(null);
+
+  useEffect(() => {
+    getSystemDiagnostics().then(setDebug);
+  }, []);
 
   if (loading) {
     return (
       <div className="flex h-[60vh] items-center justify-center">
-        <div className="flex flex-col items-center gap-4 text-center">
-          <div className="h-10 w-10 border-2 border-amber-600 border-t-transparent rounded-none animate-spin" />
-          <p className="text-xs font-black text-amber-600 uppercase tracking-[0.3em] mt-4">Initializing Command Link...</p>
-        </div>
+        <div className="text-amber-600 font-black tracking-[0.3em] uppercase">System Initializing...</div>
       </div>
     );
   }
 
+  return (
+    <div className="space-y-10">
+      {/* Diagnostic Panel */}
+      <div className="bg-zinc-900 border border-amber-600 p-4">
+        <h2 className="text-amber-600 font-black uppercase text-[10px]">DEBUG_PANEL</h2>
+        <pre className="text-[10px] text-white overflow-x-auto">
+          {JSON.stringify({ dbConnected, debug, policyCount: policies.length, survivorCount: survivors.length }, null, 2)}
+        </pre>
+        <button onClick={refreshData} className="mt-2 bg-amber-600 text-black px-4 py-1 text-[10px] font-black uppercase">Force Refresh</button>
+      </div>
+...
   const enforcedCount = policies.filter(p => p.status === "Enforced").length;
   const enforcementRate = policies.length > 0 ? (enforcedCount / policies.length) * 100 : 0;
   

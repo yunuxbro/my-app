@@ -8,10 +8,13 @@ import { revalidatePath } from "next/cache";
 // --- Connection Handshake ---
 export async function getDbStatus() {
   try {
-    await dbConnect();
-    return mongoose.connection.readyState;
+    const connection = await Promise.race([
+      dbConnect(),
+      new Promise((_, reject) => setTimeout(() => reject(new Error("DB_TIMEOUT")), 5000))
+    ]);
+    return connection.readyState;
   } catch (err) {
-    console.error("Database connection fault:", err);
+    console.error("Database connection fault:", err.message);
     return 0; // Disconnected
   }
 }
@@ -19,11 +22,14 @@ export async function getDbStatus() {
 // --- Survivor Actions ---
 export async function fetchSurvivors() {
   try {
-    await dbConnect();
+    await Promise.race([
+      dbConnect(),
+      new Promise((_, reject) => setTimeout(() => reject(new Error("DB_TIMEOUT")), 5000))
+    ]);
     const survivors = await Survivor.find({}).sort({ created_at: -1 }).lean();
     return JSON.parse(JSON.stringify(survivors));
   } catch (error) {
-    console.error("Fetch survivors error:", error);
+    console.error("Fetch survivors error:", error.message);
     return [];
   }
 }
@@ -67,11 +73,14 @@ export async function deleteSurvivor(id) {
 // --- Policy Actions ---
 export async function fetchPolicies() {
   try {
-    await dbConnect();
+    await Promise.race([
+      dbConnect(),
+      new Promise((_, reject) => setTimeout(() => reject(new Error("DB_TIMEOUT")), 5000))
+    ]);
     const policies = await Policy.find({}).sort({ created_at: -1 }).lean();
     return JSON.parse(JSON.stringify(policies));
   } catch (error) {
-    console.error("Fetch policies error:", error);
+    console.error("Fetch policies error:", error.message);
     return [];
   }
 }

@@ -1,14 +1,13 @@
 const mongoose = require('mongoose');
 
 // Extracted from verified .env.local
-const MONGODB_URI = "mongodb+srv://yuhan2008thasmal_db_user:Yuhan2008Thasmal@fndpnup.mongodb.net/NexusCore?retryWrites=true&w=majority";
+const MONGODB_URI = "mongodb+srv://yuhan2008thasmal_db_user:Thasmal2008Yuhan@fndpnup.mongodb.net/NexusCore?retryWrites=true&w=majority";
 
 async function test() {
-  console.log('Final Handshake Attempt...');
+  console.log('Initiating Core Link Handshake...');
   try {
-    // Attempt connection with a short timeout to prevent hanging
     await mongoose.connect(MONGODB_URI, {
-      serverSelectionTimeoutMS: 8000
+      serverSelectionTimeoutMS: 10000
     });
     console.log('STATUS: CORE_LINK_SECURED');
     console.log('SUCCESS: Handshake verified with Cluster [fndpnup]');

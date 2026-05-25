@@ -20,26 +20,15 @@ export default function DashboardOverview() {
     );
   }
 
-  return (
-    <div className="space-y-10">
-      {/* Diagnostic Panel */}
-      <div className="bg-zinc-900 border border-amber-600 p-4">
-        <h2 className="text-amber-600 font-black uppercase text-[10px]">DEBUG_PANEL</h2>
-        <pre className="text-[10px] text-white overflow-x-auto">
-          {JSON.stringify({ dbConnected, debug, policyCount: policies.length, survivorCount: survivors.length }, null, 2)}
-        </pre>
-        <button onClick={refreshData} className="mt-2 bg-amber-600 text-black px-4 py-1 text-[10px] font-black uppercase">Force Refresh</button>
-      </div>
-...
+  // --- LOGIC AREA ---
   const policiesList = policies || [];
-
   const enforcedCount = policiesList.filter(p => p?.status === "Enforced").length;
   const enforcementRate = policiesList.length > 0 ? (enforcedCount / policiesList.length) * 100 : 0;
   
   const alerts = [
     {
       title: dbConnected ? "CORE_LINK_SECURED" : "CORE_LINK_SEVERED",
-      desc: dbConnected ? "Handshake verified with Sector-01 API. Encrypted tunnel active." : connectionError || "Handshake failed. Protocol Nexus-01 aborted.",
+      desc: dbConnected ? "Handshake verified with Sector-01 API. Encrypted tunnel active." : "Handshake failed. Protocol Nexus-01 aborted.",
       type: dbConnected ? "success" : "danger",
       time: "INSTANT"
     },
@@ -50,7 +39,7 @@ export default function DashboardOverview() {
       time: "14m ago"
     },
     {
-      title: "DIRECTIVE_ALPHA_REVIEw",
+      title: "DIRECTIVE_ALPHA_REVIEW",
       desc: "3 new governance policies awaiting administrative signature.",
       type: "warning",
       time: "1h ago"
@@ -60,9 +49,21 @@ export default function DashboardOverview() {
   const stats = [
     { name: "API_STATUS", value: dbConnected ? "ONLINE" : "OFFLINE", label: "Sector Link", status: dbConnected ? "active" : "danger" },
     { name: "ENFORCEMENT", value: `${Math.round(enforcementRate)}%`, label: "Policy Coverage", status: enforcementRate > 80 ? "active" : "warning" },
-    { name: "CENSUS_TOTAL", value: survivors.length.toString(), label: "Entities Tracked", status: "active" },
+    { name: "CENSUS_TOTAL", value: survivors?.length?.toString() || "0", label: "Entities Tracked", status: "active" },
     { name: "SECURITY_LVL", value: "ALPHA", label: "Encryption Active", status: "active" },
   ];
+
+  // --- RENDER AREA ---
+  return (
+    <div className="space-y-10">
+      {/* Diagnostic Panel */}
+      <div className="bg-zinc-900 border border-amber-600 p-4">
+        <h2 className="text-amber-600 font-black uppercase text-[10px]">DEBUG_PANEL</h2>
+        <pre className="text-[10px] text-white overflow-x-auto">
+          {JSON.stringify({ dbConnected, debug, policyCount: policiesList.length, survivorCount: survivors?.length }, null, 2)}
+        </pre>
+        <button onClick={refreshData} className="mt-2 bg-amber-600 text-black px-4 py-1 text-[10px] font-black uppercase">Force Refresh</button>
+      </div>
 
   return (
     <div className="space-y-10">

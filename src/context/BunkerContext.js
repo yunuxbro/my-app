@@ -22,9 +22,8 @@ export function BunkerProvider({ children }) {
   }), []);
 
   // --- FETCH DATA / VERIFY CONNECTION ---
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
-      setLoading(true);
       setConnectionError(null);
       const headers = getHeaders();
 
@@ -47,16 +46,16 @@ export function BunkerProvider({ children }) {
       }
 
       const [pData, sData, hData, qData] = await Promise.all([
-        pRes.json(),
-        sRes.json(),
-        hRes.json ? hRes.json() : [],
-        qRes.json ? qRes.json() : []
+        pRes.json().catch(() => []),
+        sRes.json().catch(() => []),
+        hRes.json ? hRes.json().catch(() => []) : [],
+        qRes.json ? qRes.json().catch(() => []) : []
       ]);
 
-      setPolicies(pData || []);
-      setSurvivors(sData || []);
-      setHealthRecords(hData || []);
-      setQuarantineEvents(qData || []);
+      setPolicies(Array.isArray(pData) ? pData : []);
+      setSurvivors(Array.isArray(sData) ? sData : []);
+      setHealthRecords(Array.isArray(hData) ? hData : []);
+      setQuarantineEvents(Array.isArray(qData) ? qData : []);
       setDbConnected(true); // Verification Successful
     } catch (error) {
       console.error("Governance Link Error:", error.message);
@@ -65,11 +64,14 @@ export function BunkerProvider({ children }) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [getHeaders]);
 
   useEffect(() => {
-    fetchData();
-  }, [getHeaders]);
+    const timer = setTimeout(() => {
+      fetchData();
+    }, 0);
+    return () => clearTimeout(timer);
+  }, [fetchData]);
 
   // --- ACTIONS: POLICIES ---
   const addPolicy = async (policy) => {

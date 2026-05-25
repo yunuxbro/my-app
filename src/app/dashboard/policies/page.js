@@ -1,11 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import * as actions from "@/app/actions";
+import { useState, useEffect, useCallback } from "react";
+import { useBunker } from "@/context/BunkerContext";
 
 export default function PoliciesPage() {
-  const [policies, setPolicies] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { policies, loading, addPolicy, togglePolicyStatus, deletePolicy, refreshData } = useBunker();
   const [formData, setFormData] = useState({ 
     title: "", 
     domain: "Education", 
@@ -13,48 +12,19 @@ export default function PoliciesPage() {
     status: "Review"
   });
 
-  const loadPolicies = async () => {
-    setLoading(true);
-    try {
-      const data = await actions.fetchPolicies();
-      setPolicies(data);
-    } catch (error) {
-      console.error('Error fetching policies:', error);
-    }
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    loadPolicies();
-  }, []);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      await actions.createPolicy(formData);
-      setFormData({ title: "", domain: "Education", severity: "Medium", status: "Review" });
-      await loadPolicies();
-    } catch (error) {
-      console.error('Error creating policy:', error);
-    }
+    await addPolicy(formData);
+    setFormData({ title: "", domain: "Education", severity: "Medium", status: "Review" });
   };
 
-  const togglePolicyStatus = async (id, currentStatus) => {
-    const newStatus = currentStatus === 'Enforced' ? 'Review' : 'Enforced';
-    try {
-      await actions.updatePolicy(id, { status: newStatus });
-      await loadPolicies();
-    } catch (error) {
-      console.error('Error updating status:', error);
-    }
+  const handleToggle = async (id) => {
+    await togglePolicyStatus(id);
   };
 
-  const deletePolicy = async (id) => {
-    try {
-      await actions.deletePolicy(id);
-      await loadPolicies();
-    } catch (error) {
-      console.error('Error deleting policy:', error);
+  const handleDelete = async (id) => {
+    if (confirm("DIRECTIVE PURGE INITIATED. CONFIRM?")) {
+      await deletePolicy(id);
     }
   };
 
@@ -169,7 +139,7 @@ export default function PoliciesPage() {
                   </td>
                   <td className="py-10 px-8 text-center">
                     <button 
-                      onClick={() => togglePolicyStatus(p._id, p.status)}
+                      onClick={() => handleToggle(p._id)}
                       className={`px-5 py-2 rounded-full text-[10px] font-black uppercase tracking-[0.2em] transition-all border-2 ${
                         p.status === "Enforced" 
                           ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20 hover:bg-emerald-500/20" 
@@ -181,7 +151,7 @@ export default function PoliciesPage() {
                   </td>
                   <td className="py-10 px-12 text-right">
                     <button 
-                      onClick={() => deletePolicy(p._id)}
+                      onClick={() => handleDelete(p._id)}
                       className="p-3 text-zinc-600 hover:text-white transition-all rounded-2xl hover:bg-white/10"
                     >
                       <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>

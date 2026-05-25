@@ -1,11 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import * as actions from "@/app/actions";
+import { useState, useEffect, useCallback } from "react";
+import { useBunker } from "@/context/BunkerContext";
 
 export default function CensusPage() {
-  const [survivors, setSurvivors] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { survivors, loading, addSurvivor, toggleSurvivorStatus, deleteSurvivor, refreshData } = useBunker();
   const [formData, setFormData] = useState({ 
     identity_code: "",
     full_name: "",
@@ -14,50 +13,25 @@ export default function CensusPage() {
     status: "Active"
   });
 
-  const loadSurvivors = async () => {
-    setLoading(true);
-    const data = await actions.fetchSurvivors();
-    setSurvivors(data);
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    loadSurvivors();
-  }, []);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await actions.createSurvivor(formData);
-    if (res.success) {
-      setFormData({ 
-        identity_code: "",
-        full_name: "",
-        duty: "",
-        clearance: "ALPHA", 
-        status: "Active" 
-      });
-      await loadSurvivors();
-    } else {
-      alert(`Access Denied: ${res.error}`);
-    }
+    await addSurvivor(formData);
+    setFormData({ 
+      identity_code: "",
+      full_name: "",
+      duty: "",
+      clearance: "ALPHA", 
+      status: "Active" 
+    });
   };
 
-  const toggleSurvivorStatus = async (id, currentStatus) => {
-    const newStatus = currentStatus === 'Active' ? 'Quarantine' : 'Active';
-    const res = await actions.updateSurvivor(id, { status: newStatus });
-    if (res.success) {
-      await loadSurvivors();
-    } else {
-      alert(`Update Failed: ${res.error}`);
-    }
+  const handleToggle = async (id) => {
+    await toggleSurvivorStatus(id);
   };
 
-  const deleteSurvivor = async (id) => {
-    const res = await actions.deleteSurvivor(id);
-    if (res.success) {
-      await loadSurvivors();
-    } else {
-      alert(`Purge Failed: ${res.error}`);
+  const handleDelete = async (id) => {
+    if (confirm("REMOVING NODE FROM REGISTRY. PROCEED?")) {
+      await deleteSurvivor(id);
     }
   };
 
@@ -178,7 +152,7 @@ export default function CensusPage() {
                   </td>
                   <td className="py-10 px-8 text-center">
                     <button 
-                      onClick={() => toggleSurvivorStatus(s._id, s.status)}
+                      onClick={() => handleToggle(s._id)}
                       className={`px-5 py-2 rounded-full text-[10px] font-black uppercase tracking-[0.2em] transition-all border-2 ${
                         s.status === "Active" 
                           ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20 hover:bg-emerald-500/20" 
@@ -190,7 +164,7 @@ export default function CensusPage() {
                   </td>
                   <td className="py-10 px-12 text-right">
                     <button 
-                      onClick={() => deleteSurvivor(s._id)}
+                      onClick={() => handleDelete(s._id)}
                       className="p-3 text-zinc-600 hover:text-white transition-all rounded-2xl hover:bg-white/10"
                     >
                       <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>

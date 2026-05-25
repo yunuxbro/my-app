@@ -2,12 +2,12 @@
 @import "tailwindcss";
 
 :root {
-  --background: #0a0c10;
-  --foreground: #e2e8f0;
-  --accent-primary: #10b981;
-  --accent-secondary: #6366f1;
-  --surface-card: #11141b;
-  --surface-border: #1e293b;
+  --background: #ffffff;
+  --foreground: #0f172a;
+  --accent-primary: #059669;
+  --accent-secondary: #4f46e5;
+  --surface-card: #f8fafc;
+  --surface-border: #e2e8f0;
 }
 
 body {
@@ -20,9 +20,10 @@ body {
 
 @layer components {
   .decent-card {
-    background-color: rgba(17, 20, 27, 0.8);
+    background-color: rgba(248, 250, 252, 0.8);
     backdrop-filter: blur(12px);
-    border: 1px solid rgba(30, 41, 59, 0.5);
+    border: 1px solid rgba(226, 232, 240, 0.8);
     border-radius: 1.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   }
 }

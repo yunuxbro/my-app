@@ -14,8 +14,17 @@ export default function DashboardOverview() {
 
   if (loading) {
     return (
-      <div className="flex h-[60vh] items-center justify-center">
-        <div className="text-amber-600 font-black tracking-[0.3em] uppercase">System Initializing...</div>
+      <div className="p-10 space-y-10">
+        <div className="bg-zinc-900 border border-amber-600 p-4">
+          <h2 className="text-amber-600 font-black uppercase text-[10px]">DEBUG_PANEL (INITIALIZING)</h2>
+          <pre className="text-[10px] text-white overflow-x-auto">
+            {JSON.stringify({ dbConnected, debug }, null, 2)}
+          </pre>
+          <button onClick={refreshData} className="mt-2 bg-amber-600 text-black px-4 py-1 text-[10px] font-black uppercase">Force Refresh</button>
+        </div>
+        <div className="flex h-[30vh] items-center justify-center">
+          <div className="text-amber-600 font-black tracking-[0.3em] uppercase animate-pulse">System Initializing...</div>
+        </div>
       </div>
     );
   }
@@ -65,8 +74,6 @@ export default function DashboardOverview() {
         <button onClick={refreshData} className="mt-2 bg-amber-600 text-black px-4 py-1 text-[10px] font-black uppercase">Force Refresh</button>
       </div>
 
-  return (
-    <div className="space-y-10">
       {/* Header Section */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-zinc-900 pb-8">
         <div className="space-y-2">
@@ -149,8 +156,8 @@ export default function DashboardOverview() {
           
           <div className="h-[250px] flex items-end justify-between gap-4 px-2">
             {['Harvesting', 'Pulse', 'Telecom', 'Archive', 'Global'].map((domain) => {
-              const domainPolicies = policies.filter(p => p.domain.toLowerCase() === domain.toLowerCase());
-              const domainEnforced = domainPolicies.filter(p => p.status === 'Enforced').length;
+              const domainPolicies = policiesList.filter(p => p?.domain?.toLowerCase() === domain.toLowerCase());
+              const domainEnforced = domainPolicies.filter(p => p?.status === 'Enforced').length;
               const efficiency = domainPolicies.length > 0 ? (domainEnforced / domainPolicies.length) * 100 : 100;
               
               return (

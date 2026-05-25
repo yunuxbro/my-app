@@ -12,27 +12,26 @@ export function BunkerProvider({ children }) {
   const [dbConnected, setDbConnected] = useState(false);
   const [connectionError, setConnectionError] = useState(null);
 
-  // --- FETCH DATA VIA SERVER ACTIONS (DIRECT RELAY) ---
   const fetchData = useCallback(async () => {
     try {
+      console.log("DEBUG: Initializing Governance Relay...");
       setConnectionError(null);
       
-      // Direct relay via Server Actions to bypass API latency/auth issues
-      const [pData, sData, status] = await Promise.all([
+      const status = await actions.getDbStatus();
+      console.log("DEBUG: System Status Received:", status);
+      
+      const [pData, sData] = await Promise.all([
         actions.fetchPolicies(),
-        actions.fetchSurvivors(),
-        actions.getDbStatus()
+        actions.fetchSurvivors()
       ]);
+      
+      console.log("DEBUG: Data Relay Complete.");
 
       setPolicies(Array.isArray(pData) ? pData : []);
       setSurvivors(Array.isArray(sData) ? sData : []);
-      setDbConnected(status === 1 || status === 2); // 1 = connected, 2 = connecting
-      
-      if (status === 0) {
-        throw new Error("CORE_LINK_SEVERED: Handshake failed at server level.");
-      }
+      setDbConnected(status === 1); 
     } catch (error) {
-      console.error("Governance Relay Error:", error.message);
+      console.error("DEBUG: Governance Relay CRITICAL FAILURE:", error.message);
       setConnectionError(error.message);
       setDbConnected(false);
     } finally {

@@ -39,7 +39,6 @@ export async function createSurvivor(formData) {
     await dbConnect();
     const survivor = await Survivor.create(formData);
     revalidatePath("/dashboard/census");
-    revalidatePath("/dashboard");
     return { success: true, data: JSON.parse(JSON.stringify(survivor)) };
   } catch (error) {
     console.error("Create survivor error:", error);
@@ -52,7 +51,6 @@ export async function updateSurvivor(id, update) {
     await dbConnect();
     const survivor = await Survivor.findByIdAndUpdate(id, update, { new: true, runValidators: true });
     revalidatePath("/dashboard/census");
-    revalidatePath("/dashboard");
     return { success: true, data: JSON.parse(JSON.stringify(survivor)) };
   } catch (error) {
     console.error("Update survivor error:", error);
@@ -65,7 +63,6 @@ export async function deleteSurvivor(id) {
     await dbConnect();
     await Survivor.findByIdAndDelete(id);
     revalidatePath("/dashboard/census");
-    revalidatePath("/dashboard");
     return { success: true };
   } catch (error) {
     console.error("Delete survivor error:", error);
@@ -93,7 +90,6 @@ export async function createPolicy(formData) {
     await dbConnect();
     const policy = await Policy.create(formData);
     revalidatePath("/dashboard/policies");
-    revalidatePath("/dashboard");
     return { success: true, data: JSON.parse(JSON.stringify(policy)) };
   } catch (error) {
     console.error("Create policy error:", error);
@@ -106,7 +102,6 @@ export async function updatePolicy(id, update) {
     await dbConnect();
     const policy = await Policy.findByIdAndUpdate(id, update, { new: true, runValidators: true });
     revalidatePath("/dashboard/policies");
-    revalidatePath("/dashboard");
     return { success: true, data: JSON.parse(JSON.stringify(policy)) };
   } catch (error) {
     console.error("Update policy error:", error);
@@ -119,7 +114,6 @@ export async function deletePolicy(id) {
     await dbConnect();
     await Policy.findByIdAndDelete(id);
     revalidatePath("/dashboard/policies");
-    revalidatePath("/dashboard");
     return { success: true };
   } catch (error) {
     console.error("Delete policy error:", error);

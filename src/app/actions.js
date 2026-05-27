@@ -8,11 +8,11 @@ import { revalidatePath } from "next/cache";
 // --- Connection Handshake ---
 export async function getDbStatus() {
   try {
-    const connection = await Promise.race([
+    await Promise.race([
       dbConnect(),
       new Promise((_, reject) => setTimeout(() => reject(new Error("DB_TIMEOUT")), 5000))
     ]);
-    return connection.readyState;
+    return mongoose.connection.readyState;
   } catch (err) {
     console.error("Database connection fault:", err.message);
     return 0; // Disconnected

@@ -1,9 +1,6 @@
-import dbConnect from './dbConnect';
 import { Survivor, Policy } from '../models/DashboardModels';
 
 export async function seedDatabase() {
-  await dbConnect();
-
   const survivorCount = await Survivor.countDocuments();
   const policyCount = await Policy.countDocuments();
 

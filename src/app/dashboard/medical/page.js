@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 export default function MedicalSector() {
-  const [facilities, setFacilities] = useState([
+  const [facilities] = useState([
     { name: "Central Med-Hub", capacity: 92, resources: "High", status: "Nominal" },
     { name: "Zone 3 Clinic", capacity: 45, resources: "Nominal", status: "Nominal" },
   ]);
@@ -11,53 +11,51 @@ export default function MedicalSector() {
   const [emergency, setEmergency] = useState(false);
 
   return (
-    <div className="space-y-12">
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+    <div className="space-y-10 animate-in fade-in duration-700">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-zinc-900 pb-8">
         <div>
-          <h1 className="text-4xl font-black text-zinc-900">Medical Sector</h1>
-          <p className="text-xl text-zinc-500 mt-2 font-medium">Global health monitoring and facility management.</p>
+          <h1 className="text-3xl font-black text-white tracking-tighter uppercase italic">Medical_Sector</h1>
+          <p className="text-sm text-zinc-500 font-bold mt-2 italic opacity-80">Global health monitoring and facility management.</p>
         </div>
         <button 
           onClick={() => setEmergency(!emergency)}
-          className={`px-10 py-5 rounded-2xl text-xl font-black transition-all shadow-xl active:scale-95 ${
+          className={`px-8 py-3 rounded text-[11px] font-black uppercase tracking-[0.2em] transition-all active:scale-95 border-2 ${
             emergency 
-              ? "bg-red-600 text-white shadow-red-200 animate-pulse" 
-              : "bg-white text-red-600 border-4 border-red-600 shadow-zinc-100"
+              ? "bg-red-600/10 text-red-500 border-red-600 shadow-[0_0_20px_rgba(239,68,68,0.2)] animate-pulse" 
+              : "bg-zinc-900/40 text-red-500 border-zinc-800 hover:border-red-600/50"
           }`}
         >
           {emergency ? "EMERGENCY PROTOCOL ACTIVE" : "INITIATE EMERGENCY OVERRIDE"}
         </button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-        <div className="p-10 rounded-3xl border border-zinc-200 bg-white shadow-xl">
-          <p className="text-sm font-black text-zinc-400 uppercase tracking-widest">Global Health Index</p>
-          <p className="text-6xl font-black text-zinc-900 mt-4 tracking-tighter">94.1</p>
-          <div className="mt-6 flex items-center gap-2 text-green-600 font-black italic">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><polyline points="18 15 12 9 6 15"/></svg>
-            STABLE IMPROVEMENT
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="command-card bg-zinc-900/10 p-8">
+          <p className="text-[9px] font-black text-zinc-600 uppercase tracking-widest mb-4">Global Health Index</p>
+          <div className="flex items-end gap-3">
+            <p className="text-5xl font-black text-white tracking-tighter uppercase text-emerald-500/80">94.1</p>
+            <div className="flex items-center gap-1.5 text-emerald-600 font-black text-[9px] uppercase tracking-widest italic mb-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><polyline points="18 15 12 9 6 15"/></svg>
+              Stable
+            </div>
           </div>
         </div>
-        <div className="md:col-span-2 p-10 rounded-3xl border border-zinc-200 bg-white shadow-xl">
-          <h3 className="text-2xl font-black text-zinc-900 mb-8 font-black tracking-tight underline decoration-blue-500 decoration-4 underline-offset-8">Facility Resource Allocation</h3>
-          <div className="space-y-6">
+        
+        <div className="lg:col-span-2 command-card bg-zinc-900/10 p-8">
+          <h3 className="text-xs font-black text-white mb-8 tracking-widest uppercase italic opacity-80">Facility_Load_Registry</h3>
+          <div className="space-y-4">
             {facilities.map(f => (
-              <div key={f.name} className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-6 rounded-2xl bg-zinc-50 border border-zinc-100">
-                <span className="text-xl font-black text-zinc-900">{f.name}</span>
-                <div className="flex items-center gap-8">
+              <div key={f.name} className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-5 bg-zinc-950/40 border border-zinc-900">
+                <span className="text-sm font-black text-zinc-300 uppercase italic tracking-tighter">{f.name}</span>
+                <div className="flex items-center gap-10">
                   <div className="text-right">
-                    <p className="text-xs font-black text-zinc-400 uppercase tracking-widest">Resource Load</p>
-                    <select className="bg-transparent text-lg font-black text-blue-600 outline-none cursor-pointer">
-                      <option>High</option>
-                      <option>Nominal</option>
-                      <option>Low</option>
-                      <option>Critical</option>
-                    </select>
+                    <p className="text-[8px] font-black text-zinc-600 uppercase tracking-widest">Resource Load</p>
+                    <span className="text-xs font-black text-blue-500/80 uppercase tracking-widest">{f.resources}</span>
                   </div>
-                  <div className="h-10 w-px bg-zinc-200" />
+                  <div className="h-6 w-[1px] bg-zinc-900" />
                   <div className="text-right">
-                    <p className="text-xs font-black text-zinc-400 uppercase tracking-widest">Occupancy</p>
-                    <p className="text-lg font-black text-zinc-900">{f.capacity}%</p>
+                    <p className="text-[8px] font-black text-zinc-600 uppercase tracking-widest">Occupancy</p>
+                    <p className="text-xs font-black text-zinc-400 tracking-widest">{f.capacity}%</p>
                   </div>
                 </div>
               </div>
@@ -66,25 +64,25 @@ export default function MedicalSector() {
         </div>
       </div>
 
-      <div className="p-10 rounded-3xl border border-zinc-200 bg-white shadow-xl">
-        <h3 className="text-2xl font-black text-zinc-900 mb-8">Medical Research Initiatives</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="p-8 rounded-2xl border-4 border-dashed border-zinc-100 flex flex-col items-center justify-center text-center group hover:border-blue-200 transition-colors cursor-pointer">
-            <div className="h-16 w-16 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M12 5v14M5 12h14"/></svg>
+      <div className="command-card bg-zinc-900/10 p-8">
+        <h3 className="text-xs font-black text-white mb-8 tracking-widest uppercase italic opacity-80">Research_Initiatives</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="p-8 border border-dashed border-zinc-800 flex flex-col items-center justify-center text-center group hover:border-blue-600/30 transition-all cursor-pointer bg-zinc-950/20">
+            <div className="h-12 w-12 rounded-full bg-zinc-900 border border-zinc-800 text-blue-500/60 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M12 5v14M5 12h14"/></svg>
             </div>
-            <p className="text-xl font-black text-zinc-900">Propose New Research Grant</p>
-            <p className="text-sm font-bold text-zinc-400 mt-2 uppercase tracking-widest">Level 7 Authorization Required</p>
+            <p className="text-sm font-black text-zinc-500 uppercase tracking-widest">New Grant Proposal</p>
+            <p className="text-[8px] font-bold text-zinc-700 mt-2 uppercase tracking-[0.2em]">Level 7 Authorization Required</p>
           </div>
-          <div className="p-8 rounded-2xl bg-blue-600 shadow-lg shadow-blue-100 text-white">
-            <h4 className="text-xl font-black mb-4">Neural Regeneration V2</h4>
+          <div className="p-8 border border-zinc-800 bg-blue-600/5 shadow-inner text-white">
+            <h4 className="text-sm font-black mb-4 uppercase tracking-widest text-blue-500/80 italic">Neural_Regeneration_V2</h4>
             <div className="space-y-4">
-              <div className="h-3 w-full bg-blue-400 rounded-full overflow-hidden">
-                <div className="h-full bg-white" style={{ width: '84%' }} />
+              <div className="h-1 w-full bg-zinc-900 overflow-hidden">
+                <div className="h-full bg-blue-500/60 shadow-[0_0_10px_rgba(59,130,246,0.3)]" style={{ width: '84%' }} />
               </div>
-              <div className="flex justify-between text-sm font-black uppercase tracking-widest">
-                <span>Phase: Human Trials</span>
-                <span>84% Progress</span>
+              <div className="flex justify-between text-[9px] font-black uppercase tracking-[0.2em] text-zinc-500">
+                <span>Phase: Human_Trials</span>
+                <span className="text-blue-500/80 italic">84% Progress_Link</span>
               </div>
             </div>
           </div>

@@ -4,67 +4,75 @@
   --font-sans: 'Inter', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
-  /* Military/Government Color Palette */
+  /* Refined Tactical Palette */
   --color-background: #050505;
-  --color-foreground: #d1d5db;
+  --color-foreground: #a1a1aa;
   
-  --color-accent-primary: #f59e0b;
-  --color-accent-secondary: #dc2626;
-  --color-accent-info: #0ea5e9;
-  --color-accent-success: #10b981;
+  --color-zinc-950: #09090b;
+  --color-zinc-900: #18181b;
+  --color-zinc-800: #27272a;
   
-  --color-surface-950: #0a0a0a;
-  --color-surface-900: #121212;
-  --color-surface-800: #1a1a1a;
-  --color-surface-700: #262626;
+  --color-amber-600: #d97706;
+  --color-amber-500: #f59e0b;
+  --color-amber-400: #fbbf24;
 }
 
+/* Custom Tactical Styles */
 @layer base {
-  :root {
-    --background: #050505;
-    --foreground: #d1d5db;
-    --accent-primary: #f59e0b;
-  }
-
   body {
-    @apply bg-black text-[#d1d5db] font-mono selection:bg-amber-500/30 selection:text-amber-200 overflow-x-hidden;
-    background-image: 
-      linear-gradient(rgba(245, 158, 11, 0.01) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(245, 158, 11, 0.01) 1px, transparent 1px);
-    background-size: 40px 40px;
-    background-attachment: fixed;
+    @apply bg-background text-foreground font-mono antialiased selection:bg-amber-500/20 selection:text-amber-200;
   }
 }
 
-@utility command-card {
-  @apply bg-zinc-950/40 backdrop-blur-xl border border-zinc-900 p-6 relative transition-all duration-300;
-  @apply hover:border-amber-600/40 hover:shadow-[0_0_30px_rgba(245,158,11,0.05)] hover:-translate-y-1;
-}
-
-@utility tactical-border {
-  @apply border border-zinc-800 relative;
-  &::before {
-    content: '';
-    @apply absolute -top-px -left-px w-2 h-2 border-t-2 border-l-2 border-amber-600;
+@layer components {
+  .command-card {
+    @apply bg-zinc-900/40 backdrop-blur-md border border-zinc-800 p-6 relative transition-all duration-300 hover:border-amber-600/30 hover:shadow-[0_0_40px_rgba(245,158,11,0.03)];
   }
-  &::after {
-    content: '';
-    @apply absolute -bottom-px -right-px w-2 h-2 border-b-2 border-r-2 border-amber-600;
+
+  .status-dot {
+    @apply h-2 w-2 rounded-full;
+  }
+
+  .status-active { @apply bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.3)]; }
+  .status-warning { @apply bg-amber-500 shadow-[0_0_10px_rgba(245,158,11,0.3)]; }
+  .status-danger { @apply bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.3)]; }
+
+  .cyber-input {
+    @apply bg-zinc-950 border border-zinc-800 px-4 py-3 text-sm text-zinc-300 outline-none focus:border-amber-600/50 transition-all placeholder:text-zinc-700 font-bold;
+  }
+
+  .btn-primary {
+    @apply bg-amber-600 text-black font-black text-[11px] tracking-[0.2em] uppercase flex items-center justify-center gap-3 transition-all hover:bg-amber-500 hover:shadow-[0_0_20px_rgba(245,158,11,0.2)] disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .glass-card {
+    @apply bg-zinc-900/20 backdrop-blur-xl border border-zinc-800/50 relative;
+  }
+
+  .tactical-border {
+    @apply relative after:absolute after:inset-0 after:border after:border-white/5 after:pointer-events-none;
+  }
+
+  /* Custom Scrollbar */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    @apply bg-black;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-zinc-800 hover:bg-zinc-700 transition-colors;
   }
 }
 
-@utility cyber-input {
-  @apply bg-black/40 border border-zinc-800 text-amber-500 font-mono p-4 outline-none transition-all duration-200;
-  @apply focus:border-amber-600 focus:bg-zinc-900/40;
+/* Animations */
+@keyframes slide-in {
+  from { transform: translateY(10px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
 }
 
-@utility btn-primary {
-  @apply bg-amber-600 text-black font-black uppercase tracking-widest px-8 py-4 transition-all duration-200 flex items-center justify-center gap-2;
-  @apply hover:bg-white hover:shadow-[0_0_20px_rgba(255,255,255,0.2)];
-}
-
-@utility crt-flicker {
-  animation: flicker 0.15s infinite;
+.animate-slide-in {
+  animation: slide-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 @keyframes flicker {
@@ -88,22 +96,22 @@
 }
 
 @utility scanning-bar {
-  @apply fixed top-0 left-0 w-full h-[100px] pointer-events-none z-50;
-  background: linear-gradient(to bottom, transparent, rgba(245, 158, 11, 0.05), transparent);
-  animation: scan 8s linear infinite;
+  @apply fixed top-0 left-0 w-full h-[150px] pointer-events-none z-50;
+  background: linear-gradient(to bottom, transparent, rgba(245, 158, 11, 0.02), transparent);
+  animation: scan 10s linear infinite;
 }
 
 @keyframes pulse-grid {
-  0% { opacity: 0.1; }
-  50% { opacity: 0.3; }
-  100% { opacity: 0.1; }
+  0% { opacity: 0.05; }
+  50% { opacity: 0.15; }
+  100% { opacity: 0.05; }
 }
 
 @utility bg-grid-pulse {
   @apply fixed inset-0 pointer-events-none;
   background-image: 
-    linear-gradient(rgba(245, 158, 11, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(245, 158, 11, 0.05) 1px, transparent 1px);
-  background-size: 80px 80px;
-  animation: pulse-grid 4s ease-in-out infinite;
+    linear-gradient(rgba(245, 158, 11, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245, 158, 11, 0.03) 1px, transparent 1px);
+  background-size: 100px 100px;
+  animation: pulse-grid 6s ease-in-out infinite;
 }

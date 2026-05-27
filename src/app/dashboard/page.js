@@ -1,30 +1,16 @@
 "use client";
 
 import { useBunker } from "@/context/BunkerContext";
-import { useEffect, useState } from "react";
-import { getSystemDiagnostics } from "@/app/actions-debug";
 
 export default function DashboardOverview() {
   const { policies, survivors, dbConnected, loading, refreshData } = useBunker();
-  const [debug, setDebug] = useState(null);
-
-  useEffect(() => {
-    getSystemDiagnostics().then(setDebug);
-  }, []);
 
   if (loading) {
     return (
-      <div className="p-10 space-y-10">
-        <div className="bg-zinc-900 border border-amber-600 p-4">
-          <h2 className="text-amber-600 font-black uppercase text-[10px]">DEBUG_PANEL (INITIALIZING)</h2>
-          <pre className="text-[10px] text-white overflow-x-auto">
-            {JSON.stringify({ dbConnected, debug }, null, 2)}
-          </pre>
-          <button onClick={refreshData} className="mt-2 bg-amber-600 text-black px-4 py-1 text-[10px] font-black uppercase">Force Refresh</button>
-        </div>
-        <div className="flex h-[30vh] items-center justify-center">
-          <div className="text-amber-600 font-black tracking-[0.3em] uppercase animate-pulse">System Initializing...</div>
-        </div>
+      <div className="relative min-h-screen bg-black overflow-hidden flex items-center justify-center">
+        <div className="bg-grid-pulse" />
+        <div className="scanning-bar" />
+        <div className="text-amber-600 font-black tracking-[0.3em] uppercase animate-pulse z-10">System Initializing...</div>
       </div>
     );
   }
@@ -65,15 +51,6 @@ export default function DashboardOverview() {
   // --- RENDER AREA ---
   return (
     <div className="space-y-10">
-      {/* Diagnostic Panel */}
-      <div className="bg-zinc-900 border border-amber-600 p-4">
-        <h2 className="text-amber-600 font-black uppercase text-[10px]">DEBUG_PANEL</h2>
-        <pre className="text-[10px] text-white overflow-x-auto">
-          {JSON.stringify({ dbConnected, debug, policyCount: policiesList.length, survivorCount: survivors?.length }, null, 2)}
-        </pre>
-        <button onClick={refreshData} className="mt-2 bg-amber-600 text-black px-4 py-1 text-[10px] font-black uppercase">Force Refresh</button>
-      </div>
-
       {/* Header Section */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-zinc-900 pb-8">
         <div className="space-y-2">
@@ -94,7 +71,7 @@ export default function DashboardOverview() {
       {/* Main Stats Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {stats.map((stat) => (
-          <div key={stat.name} className="bg-zinc-950/50 backdrop-blur-md border border-zinc-900 p-6 relative transition-all duration-300 hover:border-amber-600/40 hover:shadow-[0_0_30px_rgba(245,158,11,0.05)] hover:-translate-y-1 group">
+          <div key={stat.name} className="command-card group">
             <div className="flex justify-between items-start mb-4">
               <p className="text-[9px] font-black text-zinc-600 uppercase tracking-widest">{stat.name}</p>
               <div className={`status-dot ${
@@ -119,7 +96,7 @@ export default function DashboardOverview() {
           </div>
           <div className="space-y-3">
             {alerts.map((alert, i) => (
-              <div key={i} className={`p-4 border-l-2 bg-zinc-900/30 ${
+              <div key={i} className={`p-4 border-l-2 bg-zinc-900/30 backdrop-blur-sm ${
                 alert.type === 'danger' ? 'border-red-600 bg-red-900/5' :
                 alert.type === 'warning' ? 'border-amber-600 bg-amber-900/5' :
                 alert.type === 'success' ? 'border-emerald-600 bg-emerald-900/5' :
@@ -139,7 +116,7 @@ export default function DashboardOverview() {
         </div>
 
         {/* Sector Integrity */}
-        <div className="lg:col-span-2 bg-zinc-950/50 backdrop-blur-md border border-zinc-900 p-6 relative transition-all duration-300 hover:border-amber-600/40 hover:shadow-[0_0_30px_rgba(245,158,11,0.05)] hover:-translate-y-1 group">
+        <div className="lg:col-span-2 command-card group">
           <div className="flex items-center justify-between mb-8">
             <h3 className="text-xs font-black text-white tracking-widest">Sector_Integrity_Diagnostic</h3>
             <div className="flex gap-4">
@@ -205,7 +182,7 @@ export default function DashboardOverview() {
 
       {/* Footer System Details */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="p-6 border border-zinc-900 bg-zinc-900/10">
+        <div className="p-6 border border-zinc-900 bg-zinc-900/10 backdrop-blur-sm">
           <h4 className="text-[10px] font-black text-zinc-500 mb-4 uppercase tracking-[0.2em]">Operational_Directives</h4>
           <div className="space-y-4">
             <div className="flex justify-between items-center border-b border-zinc-900 pb-2">
@@ -222,7 +199,7 @@ export default function DashboardOverview() {
             </div>
           </div>
         </div>
-        <div className="p-6 border border-zinc-900 bg-zinc-900/10">
+        <div className="p-6 border border-zinc-900 bg-zinc-900/10 backdrop-blur-sm">
           <h4 className="text-[10px] font-black text-zinc-500 mb-4 uppercase tracking-[0.2em]">Terminal_Diagnostics</h4>
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-1">

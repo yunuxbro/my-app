@@ -114,6 +114,9 @@ export default function DashboardLayout({ children }) {
 
         {/* Main Content Area */}
         <div className="flex-1 flex flex-col min-w-0 overflow-hidden relative">
+          {/* Global Background Animations */}
+          <div className="bg-grid-pulse" />
+          <div className="scanning-bar" />
           
           {/* Header */}
           <header className="h-14 bg-[#0a0a0a] border-b border-[#262626] flex items-center justify-between px-4 lg:px-8 shrink-0 z-20">

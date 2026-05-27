@@ -81,3 +81,29 @@
   );
   background-size: 100% 4px;
 }
+
+@keyframes scan {
+  from { transform: translateY(-100%); }
+  to { transform: translateY(100vh); }
+}
+
+@utility scanning-bar {
+  @apply fixed top-0 left-0 w-full h-[100px] pointer-events-none z-50;
+  background: linear-gradient(to bottom, transparent, rgba(245, 158, 11, 0.05), transparent);
+  animation: scan 8s linear infinite;
+}
+
+@keyframes pulse-grid {
+  0% { opacity: 0.1; }
+  50% { opacity: 0.3; }
+  100% { opacity: 0.1; }
+}
+
+@utility bg-grid-pulse {
+  @apply fixed inset-0 pointer-events-none;
+  background-image: 
+    linear-gradient(rgba(245, 158, 11, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245, 158, 11, 0.05) 1px, transparent 1px);
+  background-size: 80px 80px;
+  animation: pulse-grid 4s ease-in-out infinite;
+}

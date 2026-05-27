@@ -22,6 +22,7 @@ SurvivorSchema.index({ created_at: -1 });
 const PolicySchema = new mongoose.Schema({
   title: { type: String, required: true },
   domain: { type: String, required: true },
+  description: { type: String, default: "" },
   severity: { 
     type: String, 
     required: true,

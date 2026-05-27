@@ -85,9 +85,9 @@ export default function DashboardLayout({ children }) {
                     <Link 
                       href={item.href} 
                       onClick={() => setIsSidebarOpen(false)}
-                      className={`flex items-center gap-3 px-4 py-2 text-[11px] font-bold transition-all duration-200 ${pathname === item.href ? "text-white bg-zinc-800" : "text-zinc-600 hover:text-zinc-300 hover:bg-zinc-900"}`}
+                      className={`flex items-center gap-3 px-4 py-2 text-[11px] font-bold transition-all duration-200 ${pathname === item.href ? "text-amber-500 bg-amber-600/10 border-r-2 border-amber-600" : "text-zinc-500 hover:text-amber-400 hover:bg-zinc-900/50"}`}
                     >
-                      <span className="h-1 w-1 bg-zinc-700" />
+                      <span className={`h-1 w-1 ${pathname === item.href ? "bg-amber-500" : "bg-zinc-700"}`} />
                       {item.name}
                     </Link>
                   </li>

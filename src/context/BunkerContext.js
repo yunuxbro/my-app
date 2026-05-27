@@ -73,9 +73,25 @@ export function BunkerProvider({ children }) {
     return res;
   };
 
+  const updatePolicy = async (id, data) => {
+    const res = await actions.updatePolicy(id, data);
+    if (res.success) {
+      await fetchData();
+    }
+    return res;
+  };
+
   // --- ACTIONS: CENSUS ---
   const addSurvivor = async (survivor) => {
     const res = await actions.createSurvivor(survivor);
+    if (res.success) {
+      await fetchData();
+    }
+    return res;
+  };
+
+  const updateSurvivor = async (id, data) => {
+    const res = await actions.updateSurvivor(id, data);
     if (res.success) {
       await fetchData();
     }
@@ -102,8 +118,8 @@ export function BunkerProvider({ children }) {
 
   return (
     <BunkerContext.Provider value={{
-      policies, addPolicy, togglePolicyStatus, deletePolicy,
-      survivors, addSurvivor, toggleSurvivorStatus, deleteSurvivor,
+      policies, addPolicy, togglePolicyStatus, deletePolicy, updatePolicy,
+      survivors, addSurvivor, toggleSurvivorStatus, deleteSurvivor, updateSurvivor,
       dbConnected, connectionError,
       loading, refreshData: fetchData
     }}>
